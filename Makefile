@@ -27,8 +27,8 @@ flash:
 	$(AVRDUDE) -c usbasp -p m328p -U flash:w:main
 
 .wav.h:
-	$(SOX) $(SOXFLAGS) $< -r $(PCM_FREQ) -c 1 sound.u8 $(SOXFILTER)
-	$(PY) raw2h.py sound.u8 > $@
+	$(SOX) $(SOXFLAGS) $< -r $(PCM_FREQ) -c 1 $<.u8 $(SOXFILTER)
+	$(PY) raw2h.py $<.u8 > $@
 
 main:
 	${CC} ${CFLAGS} -o $@ ${OBJ}
