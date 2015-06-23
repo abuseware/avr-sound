@@ -16,4 +16,6 @@ Simple sound player using ATmega328p and MCP4822.
  * Speaker
 
 ##How to?
-    $ make all flash
+1. Copy your sound file as *sound.wav*, but remember - samples are stored in internal flash, use short files (<4s 8kHz, <2s 16kHz, <1.5s 22.05kHz, …)!
+2. Apply desired samplerate in Makefile
+3. $ make all flash
