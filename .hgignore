@@ -1,6 +1,5 @@
-.*~$
-.*\.o$
-.*\.wav$
-.*\.u8$
-^sound.h$
-^main$
+*.o
+*.wav
+*.u8
+sound.h
+main

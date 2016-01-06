@@ -1,5 +1,5 @@
 MCU=atmega328p
-FREQ=16000000UL
+FREQ=20000000UL
 
 CC=avr-gcc
 PY=python3
@@ -7,10 +7,11 @@ AVRDUDE=avrdude
 SOX=sox
 
 CFLAGS=-O3 -Wl,-s -std=c11 -pedantic -mmcu=$(MCU) -DF_CPU=$(FREQ) -DPCM_FREQ=$(PCM_FREQ)
+
 SOXFLAGS=-G
 SOXFILTER=gain -e 24
 
-PCM_FREQ=16000
+PCM_FREQ=8000
 
 OBJ=main.o dac.o spi.o
 
@@ -31,4 +32,4 @@ flash:
 	$(PY) raw2h.py $<.u8 > $@
 
 main:
-	${CC} ${CFLAGS} -o $@ ${OBJ}
+	$(CC) $(CFLAGS) -o $@ $(OBJ)
