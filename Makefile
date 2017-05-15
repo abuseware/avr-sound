@@ -2,24 +2,24 @@ MCU=atmega328p
 FREQ=20000000UL
 
 CC=avr-gcc
+LD=avr-ld
 PY=python3
 AVRDUDE=avrdude
 SOX=sox
 
 CFLAGS=-O3 -Wl,-s -std=c11 -pedantic -mmcu=$(MCU) -DF_CPU=$(FREQ) -DPCM_FREQ=$(PCM_FREQ)
+LDFLAGS=-Wl,-O1,--strip-all,--sort-common,--as-needed
 
 SOXFLAGS=-G
 SOXFILTER=gain -e 24
 
 PCM_FREQ=8000
 
-OBJ=main.o dac.o spi.o
-
 .SUFFIXES: .wav .h
 
-.PHONY: all clean flash main
+.PHONY: clean flash
 
-all: sound.h $(HDR) $(OBJ) main
+all: sound.h main
 
 clean:
 	-rm -f *.o *.u8 sound.h main
@@ -31,5 +31,5 @@ flash:
 	$(SOX) $(SOXFLAGS) $< -r $(PCM_FREQ) -c 1 $<.u8 $(SOXFILTER)
 	$(PY) raw2h.py $<.u8 > $@
 
-main:
-	$(CC) $(CFLAGS) -o $@ $(OBJ)
+main: main.o dac.o spi.o
+	$(CC) $(LDFLAGS) -o $@ $^
